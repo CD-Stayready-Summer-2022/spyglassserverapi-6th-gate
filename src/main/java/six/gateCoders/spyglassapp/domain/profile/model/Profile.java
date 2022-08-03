@@ -15,7 +15,10 @@ public class Profile {
     private String id;
 
     @NonNull
-    private String name;
+    private String firstName;
+
+    @NonNull
+    private String lastName;
 
     @NonNull
     private String email;
