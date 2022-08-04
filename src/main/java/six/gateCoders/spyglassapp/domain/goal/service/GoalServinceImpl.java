@@ -76,6 +76,18 @@ public class GoalServinceImpl implements GoalService{
         return goalRepo.save(goal);
     }
 
+    @Override
+    public Goal update(Long id, Goal goal) throws ResourceNotFoundException {
+        Goal savedGoal = getById(id);
+        savedGoal.setGoalName(goal.getGoalName());
+        savedGoal.setStepsForGoals(goal.getStepsForGoals());
+        savedGoal.setCreationDate(goal.getCreationDate());
+        savedGoal.setTargetDate(goal.getTargetDate());
+        savedGoal.setTargetDollarAmount(goal.getTargetDollarAmount());
+        savedGoal.setCurrentDollarAmount(goal.getCurrentDollarAmount());
+        return goalRepo.save(goal);
+    }
+
 
     @Override
     public void delete(Long Id) throws ResourceNotFoundException {
