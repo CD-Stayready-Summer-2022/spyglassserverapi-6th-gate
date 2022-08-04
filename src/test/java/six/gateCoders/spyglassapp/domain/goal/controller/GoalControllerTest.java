@@ -1,5 +1,6 @@
 package six.gateCoders.spyglassapp.domain.goal.controller;
 
+import lombok.Data;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +17,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import six.gateCoders.spyglassapp.domain.JsonConverter;
+import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceCreationError;
+import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceNotFoundException;
 import six.gateCoders.spyglassapp.domain.goal.model.Goal;
 import six.gateCoders.spyglassapp.domain.goal.service.GoalService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -53,4 +59,61 @@ public class GoalControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is(1L)));
     }
 
+    @Test
+    @DisplayName("Goal goalCreate - /api/v1/goals/create : failed")
+    public void createGoalRequestFailed() throws Exception {
+        BDDMockito.doThrow(new ResourceCreationError("Exists")).when(goalService).create(any());
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/vi/goals/create")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonConverter.asJsonString(mockGoal)))
+                .andExpect(MockMvcResultMatchers.status().isConflict());
+    }
+
+    @Test
+    @DisplayName("Goal Get All - /api/v1/goals : success")
+    public void getAllGoalsSuccess() throws  Exception {
+        List<Goal> goalList = new ArrayList<>();
+        goalList.add(mockGoal);
+        BDDMockito.doReturn(goalList).when(goalService).getall();
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/goals"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @DisplayName("Goal Get by Id - /api/v1/goals/{id} : success")
+    public void getByIdSuccess() throws Exception {
+        BDDMockito.doReturn(mockGoal).when(goalService).getById(1L);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/goals/{id}", 1L))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is(1L)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.goalName", Is.is("TestGoal")));
+    }
+
+    @Test
+    @DisplayName("Goal Get by Id - /api/v1/goals/{id} : Failed")
+    public void getByIdFailed() throws Exception{
+        BDDMockito.doThrow(new ResourceNotFoundException("Not found")).when(goalService).getById(1L);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/goals/{id}", 1L))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Get by Name - /api/v1/goals/findByName/{goalName} : success")
+    public void getByNameSuccess() throws Exception {
+        BDDMockito.doReturn(mockGoal).when(goalService).getByName("TestGoal");
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/goals/findByName/{goalName}", "TestGoal"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is(1L)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.goalName", Is.is("TestGoal")));
+    }
+
+    @Test
+    @DisplayName("Get by Name - /api/v1/goals/findByName/{goalName} : Failed")
+    public void getByNameFailed() throws Exception {
+        BDDMockito.doThrow(new ResourceNotFoundException("Not found")).when(goalService).getByName("TestGoal");
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/goals/findByName/{goalName}", "TestGoal"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 }

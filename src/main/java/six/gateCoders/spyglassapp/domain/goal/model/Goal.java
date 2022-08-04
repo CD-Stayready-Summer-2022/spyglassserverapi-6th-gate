@@ -34,7 +34,8 @@ public class Goal {
     @NonNull
     private String description;
 
-    private List<String> stepsForGoals;
+    @NonNull
+    private String steps;
 
     @PrePersist
     protected void onCreate() {

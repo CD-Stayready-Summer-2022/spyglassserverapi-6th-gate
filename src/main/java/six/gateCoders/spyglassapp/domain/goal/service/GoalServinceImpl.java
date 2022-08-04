@@ -80,7 +80,7 @@ public class GoalServinceImpl implements GoalService{
     public Goal update(Long id, Goal goal) throws ResourceNotFoundException {
         Goal savedGoal = getById(id);
         savedGoal.setGoalName(goal.getGoalName());
-        savedGoal.setStepsForGoals(goal.getStepsForGoals());
+        savedGoal.setSteps(goal.getSteps());
         savedGoal.setCreationDate(goal.getCreationDate());
         savedGoal.setTargetDate(goal.getTargetDate());
         savedGoal.setTargetDollarAmount(goal.getTargetDollarAmount());
