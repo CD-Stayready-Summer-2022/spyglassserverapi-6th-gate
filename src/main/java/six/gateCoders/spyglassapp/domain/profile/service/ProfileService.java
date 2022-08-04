@@ -12,8 +12,8 @@ public interface ProfileService {
     List<Profile> getAllProfiles();
     Profile getById(Long id) throws ResourceNotFoundException;
     Profile create(Profile profile) throws ResourceCreationError;
-    Profile Update(Long id, Profile profile) throws ResourceNotFoundException;
-    void Delete(Long id) throws ResourceNotFoundException;
+    Profile update(Long id, Profile profile) throws ResourceNotFoundException;
+    void delete(Long id) throws ResourceNotFoundException;
 
 
 
