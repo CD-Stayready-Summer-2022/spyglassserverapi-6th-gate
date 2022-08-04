@@ -10,6 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProfileRepo extends JpaRepository<Profile, String> {
-    List<Profile> findByEmail(String email);
     List<Profile> findall();
+    Optional<Profile> findByEmail(String email);
 }
