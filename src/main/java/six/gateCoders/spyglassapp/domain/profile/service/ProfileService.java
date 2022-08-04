@@ -6,8 +6,11 @@ import six.gateCoders.spyglassapp.domain.profile.model.Profile;
 import java.util.List;
 
 public interface ProfileService {
+<<<<<<< HEAD
 
     List<Profile> getProfileById(Long id);
 
+=======
+>>>>>>> main
 
 }
