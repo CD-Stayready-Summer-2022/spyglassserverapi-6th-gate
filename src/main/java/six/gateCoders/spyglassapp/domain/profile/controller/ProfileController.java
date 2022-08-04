@@ -30,7 +30,7 @@ public class ProfileController {
     @GetMapping
     public ResponseEntity<Iterable<Profile>> getAllProfiles(){
         Iterable<Profile> profiles = profileService.getAllProfiles();
-        return new ResponseEntity<>(profiles, HttpStatus.CREATED)
+        return new ResponseEntity<>(profiles, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
