@@ -18,6 +18,7 @@ public interface GoalService {
     Goal updateDescription(Long id, String description) throws ResourceNotFoundException;
     Goal updateCurrentDollarAmount(Long id, double currentDollarAmount) throws ResourceNotFoundException;
     Goal updateTargetDollarAmount(Long id, double targetDollarAmount) throws ResourceNotFoundException;
+    Goal update(Long id, Goal goal) throws ResourceNotFoundException;
     void delete (Long Id) throws ResourceNotFoundException;
 
 }
