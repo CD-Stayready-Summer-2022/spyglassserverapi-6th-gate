@@ -20,26 +20,26 @@ public class GoalController {
 
     @PostMapping
     public ResponseEntity<Goal> createGoal(@RequestBody Goal goal) throws ResourceNotFoundException{
-
-        return  null;
+        goal = goalService.create(goal);
+        return new ResponseEntity<>(goal, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<Iterable<Goal>> getAllGoals(){
-
-        return null;
+        Iterable<Goal> goals = goalService.getall();
+        return new ResponseEntity<>(goals, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Goal> getGoalById(@PathVariable("id") Long id) throws ResourceNotFoundException{
-
-        return null;
+        Goal goal = goalService.getById(id);
+        return new ResponseEntity<>(goal, HttpStatus.OK);
     }
 
     @PostMapping("{id}")
     public ResponseEntity<Goal> updateGoal(@PathVariable("id") Long id, @RequestBody Goal goalDetail) throws ResourceNotFoundException{
-
-        return null;
+        Goal goal = goalService.update(id, goalDetail);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("{id}")
