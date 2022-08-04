@@ -6,13 +6,13 @@ import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceCreationError;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceNotFoundException;
 import six.gateCoders.spyglassapp.domain.goal.model.Goal;
 import six.gateCoders.spyglassapp.domain.goal.repo.GoalRepo;
-
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class GoalServinceImpl implements GoalService{
-
+    
     private GoalRepo goalRepo;
 
     @Autowired
@@ -21,8 +21,8 @@ public class GoalServinceImpl implements GoalService{
     }
 
     @Override
-    public Iterable<Goal> getall() {
-        return null;
+    public List<Goal> getall() {
+        return goalRepo.findAll();
     }
 
     @Override
@@ -50,22 +50,30 @@ public class GoalServinceImpl implements GoalService{
 
     @Override
     public Goal updateTargetDate(Long id, Date targetDate) throws ResourceNotFoundException {
-        return null;
+        Goal goal = getById(id);
+        goal.setTargetDate(targetDate);
+        return goalRepo.save(goal);
     }
 
     @Override
     public Goal updateDescription(Long id, String description) throws ResourceNotFoundException {
-        return null;
+        Goal goal = getById(id);
+        goal.setDescription(description);
+        return goalRepo.save(goal);
     }
 
     @Override
     public Goal updateCurrentDollarAmount(Long id, double currentDollarAmount) throws ResourceNotFoundException {
-        return null;
+        Goal goal = getById(id);
+        goal.setCurrentDollarAmount(currentDollarAmount);
+        return goalRepo.save(goal);
     }
 
     @Override
     public Goal updateTargetDollarAmount(Long id, double targetDollarAmount) throws ResourceNotFoundException {
-        return null;
+        Goal goal = getById(id);
+        goal.setTargetDollarAmount(targetDollarAmount);
+        return goalRepo.save(goal);
     }
 
 

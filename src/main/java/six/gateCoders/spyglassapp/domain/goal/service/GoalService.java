@@ -5,10 +5,11 @@ import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceNotFoundExcepti
 import six.gateCoders.spyglassapp.domain.goal.model.Goal;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public interface GoalService {
-    Iterable<Goal> getall();
+    List<Goal> getall();
     Goal create (Goal goal) throws ResourceCreationError;
     Goal getById(Long id) throws ResourceNotFoundException;
     Optional<Goal> getByName(String goalName) throws ResourceNotFoundException;
@@ -17,7 +18,6 @@ public interface GoalService {
     Goal updateDescription(Long id, String description) throws ResourceNotFoundException;
     Goal updateCurrentDollarAmount(Long id, double currentDollarAmount) throws ResourceNotFoundException;
     Goal updateTargetDollarAmount(Long id, double targetDollarAmount) throws ResourceNotFoundException;
-
     void delete (Long Id) throws ResourceNotFoundException;
 
 }
