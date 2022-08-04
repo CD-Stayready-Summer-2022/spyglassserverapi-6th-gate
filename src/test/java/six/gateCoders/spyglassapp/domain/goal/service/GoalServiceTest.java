@@ -45,4 +45,11 @@ public class GoalServiceTest {
         Assertions.assertEquals(expectedId, goal.getId());
 
     }
+
+    @Test
+    public void getByIdTest(){
+        BDDMockito.doReturn(Optional.of(mockGoal)).when(goalRepo).findByName(any());
+        Goal goal = goalService.getById(1L);
+        Assertions.assertEquals(expectedId, goal.getId());
+    }
 }
