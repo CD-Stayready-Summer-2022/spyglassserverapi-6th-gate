@@ -36,10 +36,34 @@ public class GoalController {
         return new ResponseEntity<>(goal, HttpStatus.OK);
     }
 
-    @PostMapping("{id}")
-    public ResponseEntity<Goal> updateGoal(@PathVariable("id") Long id, @RequestBody Goal goalDetail) throws ResourceNotFoundException{
-        Goal goal = goalService.update(id, goalDetail);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    @PutMapping("{id}/name")
+    public ResponseEntity<Goal> updateGoalName(@PathVariable("id") Long id, @RequestBody Goal goal){
+        Goal updatedGoal = goalService.updateName(id, goal.getGoalName());
+        return new ResponseEntity<>(updatedGoal, HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("{id}/target-date")
+    public ResponseEntity<Goal> updateTargetDate(@PathVariable("id") Long id, @RequestBody Goal goal){
+        Goal updatedGoal = goalService.updateTargetDate(id, goal.getTargetDate());
+        return new ResponseEntity<>(updatedGoal, HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("{id}/description")
+    public ResponseEntity<Goal> updateDescription(@PathVariable("id") Long id, @RequestBody Goal goal){
+        Goal updatedGoal = goalService.updateDescription(id, goal.getDescription());
+        return new ResponseEntity<>(updatedGoal, HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("{id}/current-dollar-amount")
+    public ResponseEntity<Goal> updateCurrentDollarAmount(@PathVariable("id") Long id, @RequestBody Goal goal){
+        Goal updatedGoal = goalService.updateCurrentDollarAmount(id, goal.getCurrentDollarAmount());
+        return new ResponseEntity<>(updatedGoal, HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("{id}/target-dollar-amount")
+    public ResponseEntity<Goal> updateTargetDollarAmount(@PathVariable("id") Long id, @RequestBody Goal goal){
+        Goal updatedGoal = goalService.updateTargetDollarAmount(id, goal.getTargetDollarAmount());
+        return new ResponseEntity<>(updatedGoal, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("{id}")
