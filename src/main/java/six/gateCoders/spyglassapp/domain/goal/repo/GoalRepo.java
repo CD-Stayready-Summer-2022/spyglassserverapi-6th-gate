@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GoalRepo extends JpaRepository<Goal, Long> {
-    Optional<Goal> findByName(String name);
+    Optional<Goal> findByGoalName(String goalName);
     List<Goal> findByTargetDate(Date date);
 }

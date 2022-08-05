@@ -38,7 +38,7 @@ public class GoalServinceImpl implements GoalService{
 
     @Override
     public Optional<Goal> getByName(String goalName) throws ResourceNotFoundException {
-        return goalRepo.findByName(goalName);
+        return goalRepo.findByGoalName(goalName);
     }
 
     @Override
