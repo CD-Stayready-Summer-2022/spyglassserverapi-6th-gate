@@ -36,21 +36,21 @@ public class ProfileController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Profile> getById(@PathVariable("id") Long id) throws ResourceNotFoundException {
+    public ResponseEntity<Profile> getById(@PathVariable("id") String id) throws ResourceNotFoundException {
         Profile profile = profileService.getById(id);
         return new ResponseEntity<>(profile,HttpStatus.OK);
     }
 
     //update
     @PostMapping("{id}")
-    public ResponseEntity<Profile> updateProfile(@PathVariable("{id}") Long id, @RequestBody Profile profileDetail) throws ResourceNotFoundException{
+    public ResponseEntity<Profile> updateProfile(@PathVariable("{id}") String  id, @RequestBody Profile profileDetail) throws ResourceNotFoundException{
         Profile profile = profileService.update(id, profileDetail);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 
     @DeleteMapping("{id}")
-    public ResponseEntity<HttpStatus> deleteProfile(@PathVariable("id") Long id) throws ResourceNotFoundException{
+    public ResponseEntity<HttpStatus> deleteProfile(@PathVariable("id") String  id) throws ResourceNotFoundException{
         profileService.delete(id);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

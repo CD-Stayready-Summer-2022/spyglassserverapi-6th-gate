@@ -5,12 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceCreationError;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceNotFoundException;
-import six.gateCoders.spyglassapp.domain.goal.model.Goal;
 import six.gateCoders.spyglassapp.domain.profile.dto.ProfileCreateRequest;
-import six.gateCoders.spyglassapp.domain.profile.dto.ProfileDTO;
 import six.gateCoders.spyglassapp.domain.profile.model.Profile;
 import six.gateCoders.spyglassapp.domain.profile.repo.ProfileRepo;
-import six.gateCoders.spyglassapp.domain.users.repo.UserProfileRepo;
 import six.gateCoders.spyglassapp.security.services.FirebaseUserMgrService;
 
 import java.util.List;
@@ -33,7 +30,7 @@ public class profileServiceImpl implements ProfileService{
     }
 
     @Override
-    public Profile getById(Long id) throws ResourceNotFoundException {
+    public Profile getById(String id) throws ResourceNotFoundException {
         return ProfileRepo.findById(String.valueOf(id))
                 .orElseThrow(() -> new ResourceNotFoundException("resource with Id not found"));
     }
@@ -51,7 +48,7 @@ public class profileServiceImpl implements ProfileService{
     }
 
     @Override
-    public Profile update(Long id, Profile profile) throws ResourceNotFoundException {
+    public Profile update(String id, Profile profile) throws ResourceNotFoundException {
         Profile updateID = getById(id);
         updateID.setFirstName(profile.getFirstName());
         updateID.setLastName(profile.getLastName());
@@ -60,7 +57,7 @@ public class profileServiceImpl implements ProfileService{
     }
 
     @Override
-    public void delete(Long id) throws ResourceNotFoundException {
+    public void delete(String id) throws ResourceNotFoundException {
         Profile profile = getById(id);
         ProfileRepo.delete(profile);
     }
