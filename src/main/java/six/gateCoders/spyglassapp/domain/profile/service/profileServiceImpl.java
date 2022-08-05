@@ -51,6 +51,7 @@ public class profileServiceImpl implements ProfileService{
     @Override
     public Profile addGoalToProfile(Goal goal, String profileId) throws ResourceNotFoundException {
         Profile profile = getById(profileId);
+        goal.setProfile(profile);
         profile.getGoals().add(goal);
         return ProfileRepo.save(profile);
     }
