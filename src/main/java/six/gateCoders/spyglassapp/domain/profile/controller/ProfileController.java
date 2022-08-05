@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ProfileNotFoundException;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceNotFoundException;
+import six.gateCoders.spyglassapp.domain.goal.model.Goal;
 import six.gateCoders.spyglassapp.domain.profile.dto.ProfileCreateRequest;
 import six.gateCoders.spyglassapp.domain.profile.dto.ProfileDTO;
 import six.gateCoders.spyglassapp.domain.profile.model.Profile;
@@ -39,6 +40,12 @@ public class ProfileController {
     public ResponseEntity<Profile> getById(@PathVariable("id") String id) throws ResourceNotFoundException {
         Profile profile = profileService.getById(id);
         return new ResponseEntity<>(profile,HttpStatus.OK);
+    }
+
+    @PostMapping("{id}/goals")
+    public ResponseEntity<Profile> addGoal(@PathVariable("id") String id, @RequestBody Goal goal){
+        Profile profile = profileService.addGoalToProfile(goal, id);
+        return new ResponseEntity<>(profile, HttpStatus.CREATED);
     }
 
     //update

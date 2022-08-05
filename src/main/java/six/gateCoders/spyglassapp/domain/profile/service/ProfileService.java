@@ -12,6 +12,7 @@ public interface ProfileService {
 
     List<Profile> getAllProfiles();
     Profile getById(String id) throws ResourceNotFoundException;
+    Profile addGoalToProfile(Goal goal, String profileId) throws ResourceNotFoundException;
     Profile create(ProfileCreateRequest detailDTO) throws ResourceCreationError;
     Profile update(String id, Profile profile) throws ResourceNotFoundException;
     void delete(String id) throws ResourceNotFoundException;

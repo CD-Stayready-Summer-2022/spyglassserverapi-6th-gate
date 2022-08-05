@@ -6,6 +6,10 @@ import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceCreationError;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceNotFoundException;
 import six.gateCoders.spyglassapp.domain.goal.model.Goal;
 import six.gateCoders.spyglassapp.domain.goal.repo.GoalRepo;
+import six.gateCoders.spyglassapp.domain.profile.model.Profile;
+import six.gateCoders.spyglassapp.domain.profile.repo.ProfileRepo;
+import six.gateCoders.spyglassapp.domain.profile.service.ProfileService;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

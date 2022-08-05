@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceCreationError;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceNotFoundException;
+import six.gateCoders.spyglassapp.domain.goal.model.Goal;
 import six.gateCoders.spyglassapp.domain.profile.dto.ProfileCreateRequest;
 import six.gateCoders.spyglassapp.domain.profile.model.Profile;
 import six.gateCoders.spyglassapp.domain.profile.repo.ProfileRepo;
@@ -44,6 +45,13 @@ public class profileServiceImpl implements ProfileService{
         String uuid = firebaseUserMgrService.createFireBaseUser(detailDTO);
         Profile profile = new Profile(detailDTO.getFirstName(), detailDTO.getLastName(), detailDTO.getEmail());
         profile.setId(uuid);
+        return ProfileRepo.save(profile);
+    }
+
+    @Override
+    public Profile addGoalToProfile(Goal goal, String profileId) throws ResourceNotFoundException {
+        Profile profile = getById(profileId);
+        profile.getGoals().add(goal);
         return ProfileRepo.save(profile);
     }
 

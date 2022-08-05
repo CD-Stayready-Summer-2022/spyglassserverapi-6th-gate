@@ -6,7 +6,6 @@ import six.gateCoders.spyglassapp.domain.profile.model.Profile;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -16,6 +15,7 @@ import java.util.List;
 @ToString
 public class Goal {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
@@ -39,8 +39,7 @@ public class Goal {
     @NonNull
     private String steps;
 
-    @NonNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
     @JsonIgnore
     private Profile profile;
