@@ -5,5 +5,7 @@ create table `goal`(
     `current_dollar_amount` double,
     `creation_date` timestamp,
     `target_date` timestamp,
-    `description` varchar(500)
+    `description` varchar(500),
+    `steps` varchar(200),
+    `profile_id` varchar(50)
 );

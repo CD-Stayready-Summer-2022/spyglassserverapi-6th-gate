@@ -1,8 +1,7 @@
 create table `profile`(
-	`id` Integer primary key auto_increment,
+	`id` varchar(50) primary key,
 	`first_name` varchar(50),
     `last_name` varchar(50),
     `email` varchar(50),
-    `password` varchar(50),
-    `goal_id` Integer
+    `password` varchar(50)
 );

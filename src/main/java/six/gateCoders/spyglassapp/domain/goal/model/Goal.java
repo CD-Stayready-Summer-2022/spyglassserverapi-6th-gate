@@ -1,6 +1,8 @@
 package six.gateCoders.spyglassapp.domain.goal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import six.gateCoders.spyglassapp.domain.profile.model.Profile;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -36,6 +38,12 @@ public class Goal {
 
     @NonNull
     private String steps;
+
+    @NonNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 
     @PrePersist
     protected void onCreate() {
