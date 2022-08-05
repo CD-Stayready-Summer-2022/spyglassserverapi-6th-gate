@@ -13,7 +13,7 @@ import six.gateCoders.spyglassapp.domain.profile.model.Profile;
 import six.gateCoders.spyglassapp.domain.profile.service.ProfileService;
 
 @RestController
-@RequestMapping("/api/v1/profile")
+@RequestMapping("/api/v1/profiles")
 public class ProfileController {
 
     private ProfileService profileService;

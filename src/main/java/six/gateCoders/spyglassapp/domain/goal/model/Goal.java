@@ -41,8 +41,8 @@ public class Goal {
 
     @NonNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "profile_id")
+    @JsonIgnore
     private Profile profile;
 
     @PrePersist

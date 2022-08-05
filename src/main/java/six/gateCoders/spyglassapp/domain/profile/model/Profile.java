@@ -4,10 +4,7 @@ package six.gateCoders.spyglassapp.domain.profile.model;
 import lombok.*;
 import six.gateCoders.spyglassapp.domain.goal.model.Goal;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 
@@ -29,7 +26,7 @@ public class Profile {
     @NonNull
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = Profile.class)
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Goal> Goals;
 
 
