@@ -1,21 +1,31 @@
 package six.gateCoders.spyglassapp.domain.profile.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceCreationError;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceNotFoundException;
 import six.gateCoders.spyglassapp.domain.goal.model.Goal;
+import six.gateCoders.spyglassapp.domain.profile.dto.ProfileCreateRequest;
+import six.gateCoders.spyglassapp.domain.profile.dto.ProfileDTO;
 import six.gateCoders.spyglassapp.domain.profile.model.Profile;
 import six.gateCoders.spyglassapp.domain.profile.repo.ProfileRepo;
 import six.gateCoders.spyglassapp.domain.users.repo.UserProfileRepo;
+import six.gateCoders.spyglassapp.security.services.FirebaseUserMgrService;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
+@Slf4j
 public class profileServiceImpl implements ProfileService{
     private ProfileRepo ProfileRepo;
+    private FirebaseUserMgrService firebaseUserMgrService;
+
     @Autowired
-    public profileServiceImpl(ProfileRepo ProfileRepo) {
+    public profileServiceImpl(ProfileRepo ProfileRepo, FirebaseUserMgrService firebaseUserMgrService) {
         this.ProfileRepo = ProfileRepo;
+        this.firebaseUserMgrService = firebaseUserMgrService;
     }
     @Override
     public List<Profile> getAllProfiles() {
@@ -29,7 +39,14 @@ public class profileServiceImpl implements ProfileService{
     }
 
     @Override
-    public Profile create(Profile profile) throws ResourceCreationError {
+    public Profile create(ProfileCreateRequest detailDTO) throws ResourceCreationError {
+        Optional<Profile> optional = ProfileRepo.findByEmail(detailDTO.getEmail());
+        if(optional.isPresent())
+            throw new ResourceCreationError("Profile with this email exist");
+        log.info(detailDTO.toString());
+        String uuid = firebaseUserMgrService.createFireBaseUser(detailDTO);
+        Profile profile = new Profile(detailDTO.getFirstName(), detailDTO.getLastName(), detailDTO.getEmail());
+        profile.setId(uuid);
         return ProfileRepo.save(profile);
     }
 
@@ -39,7 +56,6 @@ public class profileServiceImpl implements ProfileService{
         updateID.setFirstName(profile.getFirstName());
         updateID.setLastName(profile.getLastName());
         updateID.setEmail(profile.getEmail());
-        updateID.setPassword(profile.getPassword());
         return ProfileRepo.save(profile);
     }
 

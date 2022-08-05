@@ -29,9 +29,6 @@ public class Profile {
     @NonNull
     private String email;
 
-    @NonNull
-    private String password;
-
     @OneToMany(cascade = CascadeType.ALL, targetEntity = Profile.class)
     private List<Goal> Goals;
 
