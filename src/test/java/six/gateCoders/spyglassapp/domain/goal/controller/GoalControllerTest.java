@@ -40,11 +40,7 @@ public class GoalControllerTest {
 
     @BeforeEach
     public void setUp(){
-<<<<<<< HEAD
-        //mockGoal = new Goal("TestGoal",1000.00,15.00,"TEST");
-=======
         mockGoal = new Goal("TestGoal",1000.00,15.00,"TEST", "");
->>>>>>> ed3e3f049b368deff43cac7b2a76c30523434db4
         mockGoal.setId(1L);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(new GoalController(goalService))

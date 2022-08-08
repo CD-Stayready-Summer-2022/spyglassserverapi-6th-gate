@@ -1,22 +1,18 @@
 package six.gateCoders.spyglassapp.domain.profile;
 
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ProfileNotFoundException;
-import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceNotFoundException;
-import six.gateCoders.spyglassapp.domain.goal.model.Goal;
+import six.gateCoders.spyglassapp.domain.profile.dto.ProfileCreateRequest;
 import six.gateCoders.spyglassapp.domain.profile.model.Profile;
 import six.gateCoders.spyglassapp.domain.profile.repo.ProfileRepo;
 import six.gateCoders.spyglassapp.domain.profile.service.ProfileService;
@@ -44,7 +40,7 @@ public class ProfileServiceTest {
     @BeforeEach
     public void setUp(){
         expectedId = "8e07da32-14c3-11ed-861d-0242ac120002";
-        mockProfile = new Profile("Yas","Wood","ywood001@gmail.com","password");
+        mockProfile = new Profile("Yas","Wood","ywood001@gmail.com");
         mockProfile.setId("8e07da32-14c3-11ed-861d-0242ac120002");
     }
 
@@ -52,7 +48,12 @@ public class ProfileServiceTest {
     public void createProfileTest(){
         BDDMockito.doReturn(Optional.empty()).when(profileRepo).findById(ArgumentMatchers.any());
         BDDMockito.doReturn(mockProfile).when(profileRepo).save(mockProfile);
-        Profile profile = profileService.create(mockProfile);
+        ProfileCreateRequest request = new ProfileCreateRequest();
+        request.setEmail(mockProfile.getEmail());
+        request.setFirstName(mockProfile.getFirstName());
+        request.setLastName(mockProfile.getLastName());
+        request.setPassword("password");
+        Profile profile = profileService.create(request);
         Assertions.assertEquals(expectedId, profile.getId());
     }
 
@@ -77,10 +78,10 @@ public class ProfileServiceTest {
     @Test
     public void updateTest(){
         BDDMockito.doReturn(Optional.of(mockProfile)).when(profileRepo).findById(any());
-        Profile updatedProfile = new Profile("Omar","Carey","oac001@gmail.com","password01");
+        Profile updatedProfile = new Profile("Omar","Carey","oac001@gmail.com");
         profileService.update(mockProfile.getId(),updatedProfile);
-        String expected = String.format("%s,%s,%s,%s",updatedProfile.getFirstName(),updatedProfile.getLastName(),updatedProfile.getEmail(),updatedProfile.getPassword());
-        String actual = String.format("%s,%s,%s,%s",mockProfile.getFirstName(),mockProfile.getLastName(),mockProfile.getEmail(),mockProfile.getPassword());
+        String expected = String.format("%s,%s,%s",updatedProfile.getFirstName(),updatedProfile.getLastName(),updatedProfile.getEmail());
+        String actual = String.format("%s,%s,%s",mockProfile.getFirstName(),mockProfile.getLastName(),mockProfile.getEmail(),mockProfile);
         Assertions.assertEquals(expected,actual);
     }
 
