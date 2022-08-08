@@ -41,6 +41,11 @@ public class GoalServinceImpl implements GoalService{
     }
 
     @Override
+    public List<Goal> getByProfileId(String profileId) {
+        return goalRepo.findByProfileId(profileId);
+    }
+
+    @Override
     public Optional<Goal> getByName(String goalName) throws ResourceNotFoundException {
         return goalRepo.findByGoalName(goalName);
     }

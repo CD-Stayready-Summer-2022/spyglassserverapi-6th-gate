@@ -12,6 +12,7 @@ public interface GoalService {
     List<Goal> getall();
     Goal create (Goal goal) throws ResourceCreationError;
     Goal getById(Long id) throws ResourceNotFoundException;
+    List<Goal> getByProfileId(String profileId);
     Optional<Goal> getByName(String goalName) throws ResourceNotFoundException;
     Goal updateName(Long id, String goalName) throws ResourceNotFoundException;
     Goal updateTargetDate(Long id, Date targetDate) throws ResourceNotFoundException;

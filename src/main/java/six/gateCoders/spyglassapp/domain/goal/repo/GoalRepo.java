@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface GoalRepo extends JpaRepository<Goal, Long> {
     Optional<Goal> findByGoalName(String goalName);
     List<Goal> findByTargetDate(Date date);
+    List<Goal> findByProfileId(String profileId);
 }

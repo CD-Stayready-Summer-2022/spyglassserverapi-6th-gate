@@ -31,6 +31,12 @@ public class GoalController {
         return new ResponseEntity<>(goals, HttpStatus.CREATED);
     }
 
+    @GetMapping("/profile/{id}/all")
+    public ResponseEntity<Iterable<Goal>> getAllFromSpecificUser(@PathVariable("id") String profileId){
+        Iterable<Goal> goals = goalService.getByProfileId(profileId);
+        return new ResponseEntity<>(goals, HttpStatus.OK);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<Goal> getGoalById(@PathVariable("id") Long id) throws ResourceNotFoundException{
         Goal goal = goalService.getById(id);
