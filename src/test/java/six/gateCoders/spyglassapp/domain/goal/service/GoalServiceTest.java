@@ -33,13 +33,13 @@ public class GoalServiceTest {
     @BeforeEach
     public void setUp(){
         expectedId = 1L;
-        mockGoal = new Goal("TestGoal",1000.00,15.00,"TEST");
+        //mockGoal = new Goal("TestGoal",1000.00,15.00,"TEST");
         mockGoal.setId(1L);
     }
 
     @Test
     public void createGoalTest(){
-        BDDMockito.doReturn(Optional.empty()).when(goalRepo).findByName(any());
+       // BDDMockito.doReturn(Optional.empty()).when(goalRepo).findByName(any());
         BDDMockito.doReturn(mockGoal).when(goalRepo).save(any());
         Goal goal = goalService.create(mockGoal);
         Assertions.assertEquals(expectedId, goal.getId());
@@ -48,7 +48,7 @@ public class GoalServiceTest {
 
     @Test
     public void getByIdTest(){
-        BDDMockito.doReturn(Optional.of(mockGoal)).when(goalRepo).findByName(any());
+        //BDDMockito.doReturn(Optional.of(mockGoal)).when(goalRepo).findByName(any());
         Goal goal = goalService.getById(1L);
         Assertions.assertEquals(expectedId, goal.getId());
     }

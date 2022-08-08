@@ -2,50 +2,51 @@ package six.gateCoders.spyglassapp.domain.profile.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import six.gateCoders.spyglassapp.domain.core.exceptions.ProfileNotFoundException;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceCreationError;
 import six.gateCoders.spyglassapp.domain.core.exceptions.ResourceNotFoundException;
-import six.gateCoders.spyglassapp.domain.goal.model.Goal;
 import six.gateCoders.spyglassapp.domain.profile.model.Profile;
 import six.gateCoders.spyglassapp.domain.profile.repo.ProfileRepo;
-import six.gateCoders.spyglassapp.domain.users.repo.UserProfileRepo;
 
 import java.util.List;
 @Service
-public class profileServiceImpl implements ProfileService{
-    private ProfileRepo ProfileRepo;
+public class ProfileServiceImpl implements ProfileService{
+    private ProfileRepo profileRepo;
     @Autowired
-    public profileServiceImpl(ProfileRepo ProfileRepo) {
-        this.ProfileRepo = ProfileRepo;
+    public ProfileServiceImpl(ProfileRepo ProfileRepo) {
+        this.profileRepo = ProfileRepo;
     }
     @Override
     public List<Profile> getAllProfiles() {
-        return ProfileRepo.findAll();
+        return profileRepo.findAll();
     }
 
     @Override
-    public Profile getById(Long id) throws ResourceNotFoundException {
-        return ProfileRepo.findById(String.valueOf(id))
+    public Profile getById(String id) throws ResourceNotFoundException {
+        return profileRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("resource with Id not found"));
     }
 
     @Override
     public Profile create(Profile profile) throws ResourceCreationError {
-        return ProfileRepo.save(profile);
+        return profileRepo.save(profile);
     }
 
     @Override
-    public Profile update(Long id, Profile profile) throws ResourceNotFoundException {
+    public Profile update(String id, Profile profile) throws ResourceNotFoundException {
         Profile updateID = getById(id);
         updateID.setFirstName(profile.getFirstName());
         updateID.setLastName(profile.getLastName());
         updateID.setEmail(profile.getEmail());
         updateID.setPassword(profile.getPassword());
-        return ProfileRepo.save(profile);
+        return profileRepo.save(profile);
     }
 
     @Override
-    public void delete(Long id) throws ResourceNotFoundException {
-        Profile profile = getById(id);
-        ProfileRepo.delete(profile);
+    public void delete(String id) throws ProfileNotFoundException {
+        profileRepo.findById(id)
+                .orElseThrow(()-> new ProfileNotFoundException("No User Profile with id: "+ id));
+        Profile userProfile = getById(id);
+        profileRepo.delete(userProfile);
     }
 }
