@@ -33,13 +33,21 @@ public class GoalServiceTest {
     @BeforeEach
     public void setUp(){
         expectedId = 1L;
+<<<<<<< HEAD
         //mockGoal = new Goal("TestGoal",1000.00,15.00,"TEST");
+=======
+        mockGoal = new Goal("TestGoal",1000.00,15.00,"TEST", "");
+>>>>>>> ed3e3f049b368deff43cac7b2a76c30523434db4
         mockGoal.setId(1L);
     }
 
     @Test
     public void createGoalTest(){
+<<<<<<< HEAD
        // BDDMockito.doReturn(Optional.empty()).when(goalRepo).findByName(any());
+=======
+        BDDMockito.doReturn(Optional.empty()).when(goalRepo).findByGoalName(any());
+>>>>>>> ed3e3f049b368deff43cac7b2a76c30523434db4
         BDDMockito.doReturn(mockGoal).when(goalRepo).save(any());
         Goal goal = goalService.create(mockGoal);
         Assertions.assertEquals(expectedId, goal.getId());
@@ -48,7 +56,11 @@ public class GoalServiceTest {
 
     @Test
     public void getByIdTest(){
+<<<<<<< HEAD
         //BDDMockito.doReturn(Optional.of(mockGoal)).when(goalRepo).findByName(any());
+=======
+        BDDMockito.doReturn(Optional.of(mockGoal)).when(goalRepo).findByGoalName(any());
+>>>>>>> ed3e3f049b368deff43cac7b2a76c30523434db4
         Goal goal = goalService.getById(1L);
         Assertions.assertEquals(expectedId, goal.getId());
     }
